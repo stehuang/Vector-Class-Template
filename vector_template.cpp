@@ -10,16 +10,15 @@
 #include <iostream>
 
 namespace Pic10c{
-    template <typename T, typename Allocator = std::allocator<T>>
+    template <typename T>
     class vector{
         
     private:
-        size_t size;
-        size_t capacity;
-        T* data;
+        size_t the_size;
+        size_t the_capacity;
+        T* the_data;
         
         static const int INIT_CAP = 10;
-
         
         
     public:
@@ -35,99 +34,106 @@ namespace Pic10c{
         size_t capacity() const;
         T front() const;
         T back() const;
-        T at( size_t index ) const;
+        T at(size_t index) const;
         void push_back(T new_value);
         void pop_back();
         void dump_data_to( std::ostream& out ) const;
         void dump_data() const;
         void push_back( double new_value );
-        void pop_back();
+        //void pop_back();
     };
-
     
-}
-
-// 4 main functions modified to accept type T objects
-
-template <typename T>
-vector<T>::vector()
-: data(nullptr), size(0), capacity(INIT_CAP) {
     
-    data = new T[capacity];
-}
-
-template <typename T>
-vector<T>::vector(const vector& source)
-: data(nullptr), size(source.size), capacity(source.capacity) {
     
-    data = new T[capacity];
+    // 4 main functions modified to accept type T objects
     
-    // Deep copy of internal array
-    for ( int i = 0 ; i < the_size ; ++i ){
-        data[i] = source.data[i];
+    template <typename T>
+    vector<T>::vector(): the_data(nullptr), the_size(0), the_capacity(INIT_CAP) {
+        the_data = new T[the_capacity];
     }
-}
-
-template <typename T>
-vector<T>&::operator=(const vector& rhs) {
-    if (this != &rhs) {     // Self-assignment?
-        // Release old memory and request more
-        delete[] data;
-        data = new T[rhs.capacity];
+    
+    template <typename T>
+    vector<T>::vector(const vector& source)
+    : the_data(nullptr), the_size(source.the_size), the_capacity(source.the_capacity) {
         
-        // Shallow copy non-pointers
-        size = rhs.size;
-        capacity = rhs.capacity;
+        the_data = new T[the_capacity];
         
-        // Deep copy internal array
-        for (int i = 0 ; i < the_size ; ++i)
-            data[i] = rhs.data[i];
+        // Deep copy of internal array
+        for (int i = 0 ; i < the_size ; ++i ){
+            the_data[i] = source.the_data[i];
+        }
     }
-    return *this;
+    
+    template <typename T>
+    vector<T>& vector<T>::operator=(const vector& rhs) {
+        if (this != &rhs) {     // Self-assignment?
+            // Release old memory and request more
+            delete[] the_data;
+            the_data = new T[rhs.the_capacity];
+            
+            // Shallow copy non-pointers
+            the_size = rhs.the_size;
+            the_capacity = rhs.the_capacity;
+            
+            // Deep copy internal array
+            for (int i = 0 ; i < the_size ; ++i)
+                the_data[i] = rhs.the_data[i];
+        }
+        return *this;
+    }
+    
+    template <typename T>
+    vector<T>::~vector(){
+        delete[] the_data;
+    }
+    
+    
+    
+    //////////////////// Other functions //////////////////////
+    template <typename T>
+    bool vector<T>::empty() const {
+        return (the_size == 0);
+    }
+    
+    template <typename T>
+    size_t vector<T>::size() const {
+        return the_size;
+    }
+    
+    template <typename T>
+    size_t vector<T>::capacity() const {
+        return the_capacity;
+    }
+    
+    template <typename T>
+    T vector<T>::front() const {
+        return *the_data;
+    }
+    
+    template <typename T>
+    T vector<T>::back() const {
+        return *(the_data + the_size - 1);
+    }
+    
+    template <typename T>
+    T vector<T>::at(size_t index) const {
+        if (index < the_size)
+            return the_data[index];
+        return the_data[0];
+    }
+    
+    
 }
 
 
-template <typename T>
-vector<T>::~vector(){
-    delete[] data;
-}
-
-
-
-//////////////////// Other functions //////////////////////
-
-bool vector::empty() const {
-    return (size == 0);
-}
-
-size_t vector::size() const {
-    return size;
-}
-
-size_t vector::capacity() const {
-    return capacity;
-}
-
-template <typename T>
-T vector::front() const {
-    return *data;
-}
-
-template <typename T>
-T vector::back() const {
-    return *(the_data + the_size - 1);
-}
-
-template <typename A_Type>
-T vector::at( size_t index ) const {
-    if (index < size)
-        return data[index];
-    return data[0];
-}
 
 
 
 
+
+
+
+#endif
 
 
 

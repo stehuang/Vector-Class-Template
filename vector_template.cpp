@@ -39,8 +39,11 @@ namespace Pic10c{
         void pop_back();
         void dump_data_to( std::ostream& out ) const;
         void dump_data() const;
-        void push_back( double new_value );
-        //void pop_back();
+        
+    private:
+        //Other members [private]
+        void reserve( size_t new_capacity );
+        
     };
     
     
@@ -123,7 +126,33 @@ namespace Pic10c{
     }
     
     
+    template <typename T>
+    void vector<T>::push_back(T new_value){
+        if ( the_size == the_capacity )
+            reserve( the_capacity + 1 );     // `the_data` is reassigned
+        
+        the_data[the_size++] = new_value;
+    }
+    
+    template <typename T>
+    void vector<T>::reserve( size_t new_capacity ){
+        if ( new_capacity > the_capacity ) {
+            if ( new_capacity <= 2 * the_capacity )
+                new_capacity = 2 * the_capacity;
+            
+            T* old_location = the_data;
+            
+            the_data = new T[new_capacity];
+            the_capacity = new_capacity;
+            
+            for ( size_t i = 0 ; i < the_size ; ++i )
+                the_data[i] = old_location[i];
+            
+            delete old_location;
+        }
+    }
 }
+
 
 
 

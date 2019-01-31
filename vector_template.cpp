@@ -205,6 +205,25 @@ namespace Pic10c{
         return *this;
     }
 
+    template <typename T>
+    T vector<T>::operator*(const vector& rhs){
+        T sum = 0;
+        for(size_t i=0; i<the_size; i++){
+            sum += the_data[i]*rhs.the_data[i];
+        }
+        return sum;
+    }
+    
+    template <typename T>
+    bool vector<T>::operator>(const vector& rhs) const{
+        
+    }
+    
+    template <typename T>
+    bool vector<T>::operator<(const vector& rhs) const{
+        
+    }
+    
 
     // end of namespace
 }

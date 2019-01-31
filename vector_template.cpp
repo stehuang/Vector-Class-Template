@@ -6,6 +6,9 @@
 //
 //
 
+
+
+
 #include <stdio.h>
 #include <iostream>
 
@@ -42,7 +45,8 @@ namespace Pic10c{
         void push_back(T new_value);
         void pop_back();
         // vector * double; the other way around is defined as a non-member func
-        vector operator*(size_t numb);
+        vector operator*(size_t numb) const;
+        vector operator+(const vector& rhs) const;
     private:
         //Other members [private]
         void reserve( size_t new_capacity );
@@ -165,13 +169,23 @@ namespace Pic10c{
     }
     
     template <typename T>
-    vector<T> vector<T>::operator*(size_t numb){
+    vector<T> vector<T>::operator*(size_t numb) const{
         vector<T> result = *this;
         for(size_t i=0; i<the_size; i++){
             result.the_data[i] = result.the_data[i]*numb;
         }
         return result;
     }
+    
+    template <typename T>
+    vector<T> vector<T>::operator+(const vector& rhs) const{
+        vector<T> result = *this;
+        for(size_t i=0; i<the_size; i++){
+            result.the_data[i] += rhs.the_data[i];
+        }
+        return result;
+    }
+    
     
     // end of namespace
 }
@@ -197,12 +211,13 @@ void print_vector( const Pic10c::vector<T>& v ){
 }
 
 // numb * vector; non member function
-//template <typename T>
-//Pic10c::vector<T>& operator*(size_t numb, const Pic10c::vector<T> rhs){
-//    Pic10c::vector<T> result = rhs * numb;
-//    //result = result * numb;
-//    return result;
-//}
+template <typename T>
+Pic10c::vector<T> operator*(size_t numb, const Pic10c::vector<T> rhs){
+    return rhs * numb;
+    // DO NOT RETURN BY REFERENCE; i.e. NO VECTOR<T>&
+}
+
+
 
 
 

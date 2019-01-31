@@ -47,6 +47,8 @@ namespace Pic10c{
         // vector * double; the other way around is defined as a non-member func
         vector operator*(size_t numb) const;
         vector operator+(const vector& rhs) const;
+        vector& operator+=(const vector& rhs);
+        
     private:
         //Other members [private]
         void reserve( size_t new_capacity );
@@ -186,11 +188,15 @@ namespace Pic10c{
         return result;
     }
     
+    // cannot contain "const" because we directly modify vec1 where vec1 += vec2
+    template <typename T>
+    vector<T>& vector<T>::operator+=(const vector& rhs){
+        *this = *this + rhs;
+        return *this;
+    }
     
     // end of namespace
 }
-
-
 
 
 

@@ -10,8 +10,7 @@
 #include <iostream>
 
 namespace Pic10c{
-    template <typename T, typename S>
-
+    template <typename T>
     class vector{
         
     private:
@@ -42,7 +41,7 @@ namespace Pic10c{
         void dump_data() const;
         void push_back(T new_value);
         void pop_back();
-        vector& operator*(S numb);
+        vector& operator*(size_t numb);
     private:
         //Other members [private]
         void reserve( size_t new_capacity );
@@ -163,7 +162,20 @@ namespace Pic10c{
             delete old_location;
         }
     }
+    
+    template <typename T>
+    vector<T>& vector<T>::operator*(size_t numb) {
+        for(size_t i=0; i < the_size; i++){
+            the_data[i] = the_data[i] * numb;
+        }
+        return *this;
+    }
+    
+    // end of namespace
 }
+
+
+
 
 
 

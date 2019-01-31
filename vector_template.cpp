@@ -1,3 +1,4 @@
+
 //
 //  vector_template.cpp
 //  
@@ -228,6 +229,29 @@ namespace Pic10c{
     // end of namespace
 }
 
+
+/** ************************ OTHER FUNCTIONS ************************ **/
+template <typename T>
+std::ostream& operator<<( std::ostream& out, const Pic10c::vector<T>& v ){
+    for ( size_t i = 0 ; i < v.size() ; ++i )
+        out << v[i] << ' ';
+    return out;
+}
+
+template <typename T>
+void print_vector( const Pic10c::vector<T>& v ){
+    if ( v.empty() )
+        std::cout << "Vector is empty\n";
+    else
+        std::cout << "Vector (contents): " << v << '\n' ;
+}
+
+// numb * vector; non member function
+template <typename T>
+Pic10c::vector<T> operator*(size_t numb, const Pic10c::vector<T> rhs){
+    return rhs * numb;
+    // DO NOT RETURN BY REFERENCE; i.e. NO VECTOR<T>&
+}
 
 
 

@@ -165,6 +165,22 @@ namespace Pic10c{
 
 
 
+/** ************************ OTHER FUNCTIONS ************************ **/
+template <typename T>
+std::ostream& operator<<( std::ostream& out, const Pic10c::vector<T>& v ){
+    for ( size_t i = 0 ; i < v.size() ; ++i )
+        out << v[i] << ' ';
+    return out;
+}
+
+template <typename T>
+void print_vector( const Pic10c::vector<T>& v ){
+    if ( v.empty() )
+        std::cout << "Vector is empty\n";
+    else
+        std::cout << "Vector (contents): " << v << '\n' ;
+}
+
 
 
 

@@ -59,7 +59,6 @@ namespace Pic10c{
 
 
         
-        
     private:
         //Other members [private]
         void reserve( size_t new_capacity );
@@ -189,39 +188,26 @@ namespace Pic10c{
         }
         return result;
     }
+
+    template <typename T>
+    vector<T> vector<T>::operator+(const vector& rhs) const{
+        vector<T> result = *this;
+        for(size_t i=0; i<the_size; i++){
+            result.the_data[i] += rhs.the_data[i];
+        }
+        return result;
+    }
     
+    // cannot contain "const" because we directly modify vec1 where vec1 += vec2
+    template <typename T>
+    vector<T>& vector<T>::operator+=(const vector& rhs){
+        *this = *this + rhs;
+        return *this;
+    }
+
+
     // end of namespace
 }
-
-
-
-
-
-/** ************************ OTHER FUNCTIONS ************************ **/
-template <typename T>
-std::ostream& operator<<( std::ostream& out, const Pic10c::vector<T>& v ){
-    for ( size_t i = 0 ; i < v.size() ; ++i )
-        out << v[i] << ' ';
-    return out;
-}
-
-template <typename T>
-void print_vector( const Pic10c::vector<T>& v ){
-    if ( v.empty() )
-        std::cout << "Vector is empty\n";
-    else
-        std::cout << "Vector (contents): " << v << '\n' ;
-}
-
-// numb * vector; non member function
-template <typename T>
-Pic10c::vector<T> operator*(size_t numb, const Pic10c::vector<T> rhs){
-    return rhs * numb;
-    // DO NOT RETURN BY REFERENCE; i.e. NO VECTOR<T>&
-}
-
-
-
 
 
 
@@ -234,6 +220,7 @@ Pic10c::vector<T> operator*(size_t numb, const Pic10c::vector<T> rhs){
 
 
 #endif
+
 
 
 

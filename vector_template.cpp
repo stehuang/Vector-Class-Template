@@ -41,7 +41,8 @@ namespace Pic10c{
         void dump_data() const;
         void push_back(T new_value);
         void pop_back();
-        vector& operator*(size_t numb);
+        // vector * double; the other way around is defined as a non-member func
+        vector operator*(size_t numb);
     private:
         //Other members [private]
         void reserve( size_t new_capacity );
@@ -70,7 +71,7 @@ namespace Pic10c{
     }
     
     template <typename T>
-    vector<T>& vector<T>::operator=(const vector& rhs) {
+    vector<T>& vector<T>::operator=(const vector& rhs){
         if (this != &rhs) {     // Self-assignment?
             // Release old memory and request more
             delete[] the_data;
@@ -164,16 +165,16 @@ namespace Pic10c{
     }
     
     template <typename T>
-    vector<T>& vector<T>::operator*(size_t numb) {
-        for(size_t i=0; i < the_size; i++){
-            the_data[i] = the_data[i] * numb;
+    vector<T> vector<T>::operator*(size_t numb){
+        vector<T> result = *this;
+        for(size_t i=0; i<the_size; i++){
+            result.the_data[i] = result.the_data[i]*numb;
         }
-        return *this;
+        return result;
     }
     
     // end of namespace
 }
-
 
 
 
@@ -195,8 +196,13 @@ void print_vector( const Pic10c::vector<T>& v ){
         std::cout << "Vector (contents): " << v << '\n' ;
 }
 
-
-
+// numb * vector; non member function
+//template <typename T>
+//Pic10c::vector<T>& operator*(size_t numb, const Pic10c::vector<T> rhs){
+//    Pic10c::vector<T> result = rhs * numb;
+//    //result = result * numb;
+//    return result;
+//}
 
 
 
@@ -205,7 +211,6 @@ void print_vector( const Pic10c::vector<T>& v ){
 
 
 #endif
-
 
 
 

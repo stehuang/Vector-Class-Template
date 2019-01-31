@@ -10,7 +10,8 @@
 #include <iostream>
 
 namespace Pic10c{
-    template <typename T>
+    template <typename T, typename S>
+
     class vector{
         
     private:
@@ -41,6 +42,7 @@ namespace Pic10c{
         void dump_data() const;
         void push_back(T new_value);
         void pop_back();
+        vector& operator*(S numb);
     private:
         //Other members [private]
         void reserve( size_t new_capacity );

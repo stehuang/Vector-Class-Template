@@ -35,11 +35,12 @@ namespace Pic10c{
         T front() const;
         T back() const;
         T at(size_t index) const;
-        void push_back(T new_value);
-        void pop_back();
+        T& operator[]( size_t index );
+        T operator[]( size_t index ) const;
         void dump_data_to( std::ostream& out ) const;
         void dump_data() const;
-        
+        void push_back(T new_value);
+        void pop_back();
     private:
         //Other members [private]
         void reserve( size_t new_capacity );
@@ -125,6 +126,15 @@ namespace Pic10c{
         return the_data[0];
     }
     
+    template <typename T>
+    T& vector<T>::operator[]( size_t index ){
+        return the_data[index];
+    }
+    
+    template <typename T>
+    T vector<T>::operator[]( size_t index ) const {
+        return the_data[index];
+    }
     
     template <typename T>
     void vector<T>::push_back(T new_value){
@@ -152,6 +162,8 @@ namespace Pic10c{
         }
     }
 }
+
+
 
 
 
